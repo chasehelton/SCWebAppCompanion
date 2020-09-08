@@ -39,3 +39,7 @@ button {
 .submitButton {
   padding: 10px;
 }
+
+.signOutButton {
+  background-color: red;
+}

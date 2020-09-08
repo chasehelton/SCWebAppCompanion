@@ -1,35 +1,28 @@
 import React, {useState} from 'react';
 import './App.css';
+import Firebase from './lib/firebase';
 
-import Events from './components/Events';
+import Manager from './pages/Manager';
+import Login from './pages/Login';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('E');
+  const [currentUser, setCurrentUser] = useState(null);
+  Firebase.auth().onAuthStateChanged((user) => {
+    if (user.email === 'scappadmin@summitrdu.com') {
+      setCurrentUser(user);
+    } else {
+      setCurrentUser(null);
+    }
+  })
+
   return (
-    <div className="mainContainer">
-      <h1>Summit College App Management</h1>
-      <div className="tabContainer">
-        <button onClick={() => setCurrentPage('E')}>Events</button>
-        <button onClick={() => setCurrentPage('A')}>Announcements</button>
-        <button onClick={() => setCurrentPage('N')}>Notifications</button>
-        <button onClick={() => setCurrentPage('S')}>Scripture</button>
-        <button onClick={() => setCurrentPage('P')}>Podcasts</button>
-      </div>
-      {currentPage === 'E' && (
-        <Events />
+    <>
+      {currentUser && (
+        <Manager />
       )}
-      {currentPage === 'A' && (
-        <p>Announcements</p>
+      {!currentUser && (
+        <Login />
       )}
-      {currentPage === 'N' && (
-        <p>Notifications</p>
-      )}
-      {currentPage === 'S' && (
-        <p>Scripture</p>
-      )}
-      {currentPage === 'P' && (
-        <p>Podcasts</p>
-      )}
-    </div>
+    </>
   );
 }
