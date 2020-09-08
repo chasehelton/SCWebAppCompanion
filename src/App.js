@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
 
-function App() {
+import Events from './components/Events';
+
+export default function App() {
+  const [currentPage, setCurrentPage] = useState('E');
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="mainContainer">
+      <h1>Summit College App Management</h1>
+      <div className="tabContainer">
+        <button onClick={() => setCurrentPage('E')}>Events</button>
+        <button onClick={() => setCurrentPage('A')}>Announcements</button>
+        <button onClick={() => setCurrentPage('N')}>Notifications</button>
+        <button onClick={() => setCurrentPage('S')}>Scripture</button>
+        <button onClick={() => setCurrentPage('P')}>Podcasts</button>
+      </div>
+      {currentPage === 'E' && (
+        <Events />
+      )}
+      {currentPage === 'A' && (
+        <p>Announcements</p>
+      )}
+      {currentPage === 'N' && (
+        <p>Notifications</p>
+      )}
+      {currentPage === 'S' && (
+        <p>Scripture</p>
+      )}
+      {currentPage === 'P' && (
+        <p>Podcasts</p>
+      )}
     </div>
   );
 }
-
-export default App;
