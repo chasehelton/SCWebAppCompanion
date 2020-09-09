@@ -20,14 +20,17 @@ export default function Login() {
   }
 
   return(
-    <div className="mainContainer">
+    <div className="loginContainer">
+      <h1>Admin Login</h1>
       <div className="inputContainer">
-        <label for="eventTitle">Email: </label>
+        {/* <label for="eventTitle">Email: </label> */}
+        <h3>Username: </h3>
         <input type="text" id="eventTitle" name="Title" onChange={handleEmailChange} />
       </div>
       <div className="inputContainer">
-        <label for="eventTitle">Password: </label>
-        <input type="text" id="eventTitle" name="Title" onChange={handlePasswordChange} />
+        {/* <label for="eventTitle">Password: </label> */}
+        <h3>Password: </h3>
+        <input type="password" id="eventTitle" name="Title" onChange={handlePasswordChange} />
       </div>
       {readyToSubmit && (
         <button className="submitButton" onClick={() => handleSubmit(email, password)}>Submit</button>

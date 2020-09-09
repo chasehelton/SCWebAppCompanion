@@ -41,7 +41,6 @@ export default function Events() {
       .add(event)
       .then(() => {
         alert('Sent!');
-        window.location.reload();
       })
       .catch(() => console.log('Something went wrong'));
   }

@@ -5,6 +5,14 @@ import Firebase from '../lib/firebase';
 
 export default function Manager() {
   const [currentPage, setCurrentPage] = useState('E');
+
+  const handleSignout = () => {
+    let ans = window.confirm("Are you sure you want to sign out?")
+    if (ans) {
+      Firebase.auth().signOut();
+      console.log('Logged out');
+    }
+  }
   return (
     <div className="mainContainer">
       <h1>Summit College App Management</h1>
@@ -14,7 +22,7 @@ export default function Manager() {
         <button onClick={() => setCurrentPage('N')}>Notifications</button>
         <button onClick={() => setCurrentPage('S')}>Scripture</button>
         <button onClick={() => setCurrentPage('P')}>Podcasts</button>
-        <button className="signOutButton" onClick={() => Firebase.auth().signOut()}>Sign Out</button>
+        <button className="signOutButton" onClick={() => handleSignout()}>Sign Out</button>
       </div>
       {currentPage === 'E' && (
         <Events />
