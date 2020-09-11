@@ -25,6 +25,15 @@ export default function Events() {
     else setIsReadyToSubmit(false);
   }, [startDate, endDate, title, previewText, description, time, location])
 
+  useEffect(() => {
+    let date1 = new Date(startDate);
+    let date2 = new Date(endDate);
+    if (date1.getTime() - date2.getTime() > 0) {
+      setIsReadyToSubmit(false);
+      alert('End date cannot be before start date');
+    }
+  }, [startDate, endDate])
+
   const event = {
     startDate,
     endDate,
