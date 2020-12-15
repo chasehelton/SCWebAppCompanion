@@ -58,31 +58,31 @@ export default function Events() {
       <h2>Events</h2>
       <div className="eventsContainer">
         <div className="inputContainer">
-          <label for="eventTitle">Title: </label>
+          <label htmlFor="eventTitle">Title: </label>
           <input type="text" id="eventTitle" name="Title" onChange={handleTitleChange} />
         </div>
         <div className="inputContainer">
-          <label for="eventDescription">Description: </label>
+          <label htmlFor="eventDescription">Description: </label>
           <textarea id="eventDescription" name="Description" cols="60" rows="5" onChange={handleDescChange}></textarea>
         </div>
         <div className="inputContainer">
-          <label for="eventPreviewText">Preview: </label>
+          <label htmlFor="eventPreviewText">Preview: </label>
           <textarea id="eventPreviewText" name="Preview" cols="60" rows="5" onChange={handlePreviewChange}></textarea>
         </div>
         <div className="inputContainer">
-          <label for="eventStartDate">Start Date: </label>
+          <label htmlFor="eventStartDate">Start Date: </label>
           <input type="date" id="eventStartDate" name="Start Date" onChange={handleStartDateChange} />
         </div>
         <div className="inputContainer">
-          <label for="eventEndDate">End Date: </label>
+          <label htmlFor="eventEndDate">End Date: </label>
           <input type="date" id="eventEndDate" name="End Date" onChange={handleEndDateChange} />
         </div>
         <div className="inputContainer">
-          <label for="eventTime">Time: </label>
+          <label htmlFor="eventTime">Time: </label>
           <input type="time" id="eventTime" name="Time" onChange={handleTimeChange} />
         </div>
         <div className="inputContainer">
-          <label for="eventAddress">Location: </label>
+          <label htmlFor="eventAddress">Location: </label>
           <input type="text" id="eventAddress" name="Address" onChange={handleLocationChange} />
         </div>
       </div>

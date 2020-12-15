@@ -80,6 +80,20 @@ textarea {
   padding: 10px;
 }
 
+.tabContainer {
+  display: flex;
+  flex: 1 0 0;
+}
+
+button {
+  background-color: white;
+  
+}
+button:hover {
+  background-color: lightgray;
+  color: black;
+}
+
 .submitButton {
   margin-top: 50px;
   width: 400px;
