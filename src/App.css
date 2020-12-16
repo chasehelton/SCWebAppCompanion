@@ -104,6 +104,10 @@ button:hover {
   font-weight: 500;
 }
 
+.editButton {
+  color: #60f4ff;
+}
+
 .signOutButton {
   background-color: red;
   color: white;
@@ -112,4 +116,20 @@ button:hover {
 .signOutButton:hover {
   background-color: red;
   color: white;
+}
+
+table {
+  width: 100%;
+  padding: 20px;
+}
+
+td {
+  padding: 10px 10px;
+  align-items: center;
+  justify-content: center;
+}
+
+tr {
+  align-items: center;
+  justify-content: center;
 }

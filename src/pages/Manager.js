@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import '../App.css';
 import Events from '../components/Events';
-import Crud from '../components/Home';
+import Home from '../components/Home';
 import Firebase from '../lib/firebase';
 
 export default function Manager() {
@@ -31,7 +31,7 @@ export default function Manager() {
         <button className="signOutButton" onClick={() => handleSignout()}>Sign Out</button>
       </div>
       {currentPage === 'H' && (
-        <Crud />
+        <Home />
       )}
       {currentPage === 'E' && (
         <Events />
