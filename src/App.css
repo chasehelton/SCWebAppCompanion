@@ -37,14 +37,16 @@ button {
   overflow: hidden;
   border: none;
   border-radius: 10px;
-  background-color: #ddd;
   font-weight: 600;
+  background-color: lightgray;
+  font-size: large;
 }
 
 button:hover {
-  background-color: black;
   opacity: .5;
   color: white;
+  background-color: lightgray;
+  color: black;
 }
 
 .eventsContainer {
@@ -81,17 +83,26 @@ textarea {
 }
 
 .tabContainer {
+  margin-top: 50px;
   display: flex;
   flex: 1 0 0;
 }
 
-button {
-  background-color: white;
-  
+.tabContainer button {
+  width: 200px;
 }
-button:hover {
-  background-color: lightgray;
-  color: black;
+
+.addButtonContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-self: flex-start;
+  margin-top: 20px;
+}
+
+.addButtonContainer button {
+  padding: 10 0;
+  font-size: xx-large;
 }
 
 .submitButton {
@@ -105,7 +116,7 @@ button:hover {
 }
 
 .editButton {
-  color: #60f4ff;
+  color: black;
 }
 
 .signOutButton {
@@ -120,16 +131,34 @@ button:hover {
 
 table {
   width: 100%;
+  margin: 20px;
   padding: 20px;
 }
 
 td {
-  padding: 10px 10px;
+  padding: 20px 20px;
   align-items: center;
   justify-content: center;
+}
+
+th {
+  font-size: xx-large;
+  padding: 0;
 }
 
 tr {
   align-items: center;
   justify-content: center;
+  width: 100%;
+  background-color: lightgray;
+}
+
+.closeButton {
+  margin-top: 25px;
+  width: 400px;
+  font-size: 18px;
+  border: none;
+  background-color: red;
+  border-radius: 10px;
+  font-weight: 500;
 }

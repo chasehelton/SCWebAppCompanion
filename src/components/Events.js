@@ -1,96 +1,104 @@
 import React, {useState, useEffect} from 'react';
 import '../App.css';
 import Firebase from '../lib/firebase';
+import AddEvent from '../components/AddEvent';
 
 export default function Events() {
-  const [startDate, setStartDate] = useState("");
-  const handleStartDateChange = ev => setStartDate(ev.target.value);
-  const [endDate, setEndDate] = useState("");
-  const handleEndDateChange = ev => setEndDate(ev.target.value);
-  const [title, setTitle] = useState("");
-  const handleTitleChange = ev => setTitle(ev.target.value);
-  const [description, setDesc] = useState("");
-  const handleDescChange = ev => setDesc(ev.target.value);
-  const [previewText, setPreviewText] = useState("");
-  const handlePreviewChange = ev => setPreviewText(ev.target.value);
-  const [time, setTime] = useState("");
-  const handleTimeChange = ev => setTime(ev.target.value);
-  const [location, setLocation] = useState("");
-  const handleLocationChange = ev => setLocation(ev.target.value);
-
-  const [readyToSubmit, setIsReadyToSubmit] = useState(false);
-
+  const [data, setData] = useState([]);
+  const [isResolved, setIsResolved] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
+  const [isEditting, setIsEditting] = useState(false);
+  const [docId, setDocId] = useState('');
   useEffect(() => {
-    if (startDate && endDate && title && previewText && description && time && location) setIsReadyToSubmit(true);
-    else setIsReadyToSubmit(false);
-  }, [startDate, endDate, title, previewText, description, time, location])
+    async function getEvents() {
+      await Firebase.firestore().collection('events').get()
+        .then(querySnapshot => {
+          let tempData = [];
+          querySnapshot.forEach(doc => {
+            let title = doc.data().title;
+            let description = doc.data().description;
+            let startDate = doc.data().startDate;
+            let endDate = doc.data().endDate;
+            let previewText = doc.data().previewText;
+            let location = doc.data().location;
+            let time = doc.data().time;
+            let type = 'event';
+            let id = doc.id;
 
-  useEffect(() => {
-    let date1 = new Date(startDate);
-    let date2 = new Date(endDate);
-    if (date1.getTime() - date2.getTime() > 0) {
-      setIsReadyToSubmit(false);
-      alert('End date cannot be before start date');
+            let event = {
+              id,
+              type,
+              title,
+              description,
+              startDate,
+              endDate,
+              previewText,
+              location,
+              time,
+            }
+            tempData.push(event);
+          });
+          setData(tempData);
+          setIsResolved(true);
+        }
+      )
     }
-  }, [startDate, endDate])
+    getEvents();
+  }, [isAdding]);
 
-  const event = {
-    startDate,
-    endDate,
-    title,
-    previewText,
-    description,
-    time,
-    location,
-  }
-
-  const sendData = event => {
-    Firebase.firestore()
-      .collection('events')
-      .add(event)
-      .then(() => {
-        alert('Sent!');
-      })
-      .catch(() => console.log('Something went wrong'));
-  }
   return (
     <>
-      <h2>Events</h2>
-      <div className="eventsContainer">
-        <div className="inputContainer">
-          <label htmlFor="eventTitle">Title: </label>
-          <input type="text" id="eventTitle" name="Title" onChange={handleTitleChange} />
-        </div>
-        <div className="inputContainer">
-          <label htmlFor="eventDescription">Description: </label>
-          <textarea id="eventDescription" name="Description" cols="60" rows="5" onChange={handleDescChange}></textarea>
-        </div>
-        <div className="inputContainer">
-          <label htmlFor="eventPreviewText">Preview: </label>
-          <textarea id="eventPreviewText" name="Preview" cols="60" rows="5" onChange={handlePreviewChange}></textarea>
-        </div>
-        <div className="inputContainer">
-          <label htmlFor="eventStartDate">Start Date: </label>
-          <input type="date" id="eventStartDate" name="Start Date" onChange={handleStartDateChange} />
-        </div>
-        <div className="inputContainer">
-          <label htmlFor="eventEndDate">End Date: </label>
-          <input type="date" id="eventEndDate" name="End Date" onChange={handleEndDateChange} />
-        </div>
-        <div className="inputContainer">
-          <label htmlFor="eventTime">Time: </label>
-          <input type="time" id="eventTime" name="Time" onChange={handleTimeChange} />
-        </div>
-        <div className="inputContainer">
-          <label htmlFor="eventAddress">Location: </label>
-          <input type="text" id="eventAddress" name="Address" onChange={handleLocationChange} />
-        </div>
-      </div>
-      {readyToSubmit && (
-        <button className="submitButton" onClick={() => sendData(event)}>Submit</button>
+      {!isAdding && !isEditting && (
+        <>
+          <div className="addButtonContainer">
+            <button onClick={() => setIsAdding(true)}>+ Add Event</button>
+          </div>
+          {!isResolved && <h1>Loading...</h1>}
+          {isResolved && <table>
+            <tr>
+              <th></th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Preview Text</th>
+              <th>Location</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Time</th>
+            </tr>
+            {data.map(ele => {
+              return (
+                <>
+                  <tr>
+                    <td><button className="editButton" onClick={() => {
+                      setIsEditting(true);
+                      setDocId(ele.id);
+                      console.log(ele.id);
+                    }}>Edit</button></td>
+                    <td>{ele.title}</td>
+                    <td>{ele.description}</td>
+                    <td>{ele.previewText}</td>
+                    <td>{ele.location}</td>
+                    <td>{ele.startDate}</td>
+                    <td>{ele.endDate}</td>
+                    <td>{ele.time}</td>
+                    <br />
+                  </tr>
+                </>)
+            })}
+          </table>}
+        </>
       )}
-      {!readyToSubmit && (
-        <button className="submitButton" onClick={() => alert('Please fill in all fields.')}>Submit</button>
+      {isAdding && (
+        <>
+          <AddEvent isAdding={isAdding}/>
+          <button className="closeButton" onClick={() => setIsAdding(false)}>Close</button>
+        </>
+      )}
+      {isEditting && (
+        <>
+          <AddEvent isEditting={isAdding} docId={docId} />
+          <button className="closeButton" onClick={() => setIsEditting(false)}>Close</button>
+        </>
       )}
     </>
   );
