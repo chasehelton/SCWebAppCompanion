@@ -1,3 +1,7 @@
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
 .mainContainer {
   display: flex;
   text-align: center;
@@ -28,18 +32,11 @@
 
 button {
   max-width: 300px;
-  padding-right: 20px;
-  padding-left: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-right: 12px;
-  margin-left: 12px;
-  overflow: hidden;
+  font-weight: 600;
+  font-size: large;
+  margin: 5px;
   border: none;
   border-radius: 10px;
-  font-weight: 600;
-  background-color: lightgray;
-  font-size: large;
 }
 
 button:hover {
@@ -82,26 +79,49 @@ textarea {
   padding: 10px;
 }
 
-.tabContainer {
-  margin-top: 50px;
-  display: flex;
-  flex: 1 0 0;
+.navBar {
+  display: inline-block;
+  width: 100%;
+  padding: 15px;
 }
 
-.tabContainer button {
-  width: 200px;
+.dataSelectButtons {
+  float: left;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  align-self: flex-start;
+}
+
+.dataSelectButtons button {
+  padding: 10px;
+}
+
+.settingsButtons {
+  float: right;
+}
+
+.navButton {
+  flex: 1;
+  display: flex;
+}
+
+.signOut {
+  flex: 1;
+  display: flex;
+  align-self: flex-end;
 }
 
 .addButtonContainer {
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-self: flex-start;
-  margin-top: 20px;
+  justify-content: flex-start;
+  margin: 25px;
 }
 
 .addButtonContainer button {
-  padding: 10 0;
+  padding: 10px 10px;
   font-size: xx-large;
 }
 
@@ -117,6 +137,22 @@ textarea {
 
 .editButton {
   color: black;
+  background-color: white;
+}
+
+.deleteButton {
+  color: red;
+  background-color: white;
+}
+
+.editButtonInverted {
+  color: black;
+  background-color: lightgray;
+}
+
+.deleteButtonInverted {
+  color: red;
+  background-color: lightgray;
 }
 
 .signOutButton {
@@ -129,28 +165,53 @@ textarea {
   color: white;
 }
 
+.tableHeader {
+  border: 1px solid black;
+  background-color: #60f4ff;
+}
+
 table {
+  display: flex;
   width: 100%;
-  margin: 20px;
-  padding: 20px;
+  margin-left: 40px;
+  margin-right: 40px;
+  border-collapse: collapse;
 }
 
 td {
   padding: 20px 20px;
-  align-items: center;
-  justify-content: center;
+  text-align: left;
 }
 
 th {
   font-size: xx-large;
-  padding: 0;
 }
 
 tr {
+  margin-left: 25px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid black;
+  flex: 1;
+}
+
+.whiteRow {
+  margin-left: 25px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: none;
+  flex: 1;
+}
+
+.grayRow {
+  margin-left: 25px;
   align-items: center;
   justify-content: center;
   width: 100%;
   background-color: lightgray;
+  flex: 1;
 }
 
 .closeButton {
@@ -161,4 +222,9 @@ tr {
   background-color: red;
   border-radius: 10px;
   font-weight: 500;
+}
+
+.crudButtons {
+  display: flex;
+  flex: 1;
 }

@@ -15,23 +15,31 @@ export default function Manager() {
       console.log('Logged out');
     }
   }
+  
   return (
-    <div className="mainContainer">
-      <div className="tabContainer">
-        <button onClick={() => setCurrentPage('E')}>Events</button>
-        <button onClick={() => setCurrentPage('A')}>Announcements</button>
-        <button onClick={() => setCurrentPage('S')}>Scripture</button>
-        <button className="signOutButton" onClick={() => handleSignout()}>Sign Out</button>
+    <>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"></link>
+      <div className="mainContainer">
+        <div className="navBar">
+          <div className="dataSelectButtons">
+            <div className="navButton"><button onClick={() => setCurrentPage('E')}>Events</button></div>
+            <div className="navButton"><button onClick={() => setCurrentPage('A')}>Announcements</button></div>
+            <div className="navButton"><button onClick={() => setCurrentPage('S')}>Scripture</button></div>
+          </div>
+          <div className="settingsButtons">
+            <button className="signOutButton" onClick={() => handleSignout()}>Sign Out</button>
+          </div>
+        </div>
+        {currentPage === 'E' && (
+          <Events />
+        )}
+        {currentPage === 'A' && (
+          <p>Announcements</p>
+        )}
+        {currentPage === 'S' && (
+          <p>Scripture</p>
+        )}
       </div>
-      {currentPage === 'E' && (
-        <Events />
-      )}
-      {currentPage === 'A' && (
-        <p>Announcements</p>
-      )}
-      {currentPage === 'S' && (
-        <p>Scripture</p>
-      )}
-    </div>
+    </>
   );
 }

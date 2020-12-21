@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import '../App.css';
 import Firebase from '../lib/firebase';
 
-export default function AddEvent({isAdding, isEditting, docId}) {
+export default function AddEvent({isAdding, isEditing, docId}) {
   const [startDate, setStartDate] = useState("");
   const handleStartDateChange = ev => setStartDate(ev.target.value);
   const [endDate, setEndDate] = useState("");
@@ -23,7 +23,7 @@ export default function AddEvent({isAdding, isEditting, docId}) {
   useEffect(() => {
     if (startDate && endDate && title && previewText && description && time && location) setIsReadyToSubmit(true);
     else setIsReadyToSubmit(false);
-  }, [startDate, endDate, title, previewText, description, time, location])
+  }, [startDate, endDate, title, previewText, description, time, location, isEditing, isAdding])
 
   useEffect(() => {
     let date1 = new Date(startDate);
@@ -50,7 +50,7 @@ export default function AddEvent({isAdding, isEditting, docId}) {
       .add(event)
       .then(() => {
         alert('Sent!');
-        isAdding = true;
+        isAdding = false;
       })
       .catch(() => console.log('Something went wrong'));
   }
@@ -62,14 +62,14 @@ export default function AddEvent({isAdding, isEditting, docId}) {
       .update(event)
       .then(() => {
         alert('Sent!');
-        isAdding = true;
+        isEditing = false;
       })
       .catch(() => console.log('Something went wrong'));
   }
   return (
     <>
       {isAdding && (<h2>Adding Event</h2>)}
-      {isEditting && (<h2>Editting Event</h2>)}
+      {isEditing && (<h2>Editing Event</h2>)}
       <div className="eventsContainer">
         <div className="inputContainer">
           <label htmlFor="eventTitle">Title: </label>
@@ -102,10 +102,10 @@ export default function AddEvent({isAdding, isEditting, docId}) {
       </div>
       {readyToSubmit && (
         <>
-          {isEditting && (
+          {isEditing && (
             <button className="submitButton" onClick={() => editData(event)}>Submit</button>
           )}
-          {!isEditting && (
+          {!isEditing && (
             <button className="submitButton" onClick={() => sendData(event)}>Submit</button>
           )}
         </>
