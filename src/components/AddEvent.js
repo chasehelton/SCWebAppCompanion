@@ -17,13 +17,31 @@ export default function AddEvent({isAdding, isEditing, docId}) {
   const handleTimeChange = ev => setTime(ev.target.value);
   const [location, setLocation] = useState("");
   const handleLocationChange = ev => setLocation(ev.target.value);
-
   const [readyToSubmit, setIsReadyToSubmit] = useState(false);
 
   useEffect(() => {
     if (startDate && endDate && title && previewText && description && time && location) setIsReadyToSubmit(true);
     else setIsReadyToSubmit(false);
   }, [startDate, endDate, title, previewText, description, time, location, isEditing, isAdding])
+
+  useEffect(() => {
+    if (!isAdding) {
+      Firebase.firestore()
+        .collection('events')
+        .doc(docId)
+        .get()
+        .then((event) => {
+          setStartDate(event.data().startDate);
+          setEndDate(event.data().endDate);
+          setTitle(event.data().title);
+          setDesc(event.data().description);
+          setPreviewText(event.data().previewText);
+          setTime(event.data().time);
+          setLocation(event.data().location);
+          console.log(event.data().startDate);
+        })
+    }
+  }, [isAdding, isEditing, docId])
 
   useEffect(() => {
     let date1 = new Date(startDate);
@@ -73,31 +91,31 @@ export default function AddEvent({isAdding, isEditing, docId}) {
       <div className="eventsContainer">
         <div className="inputContainer">
           <label htmlFor="eventTitle">Title: </label>
-          <input type="text" id="eventTitle" name="Title" onChange={handleTitleChange} />
+          <input type="text" id="eventTitle" name="Title" onChange={handleTitleChange} value={title}/>
         </div>
         <div className="inputContainer">
           <label htmlFor="eventDescription">Description: </label>
-          <textarea id="eventDescription" name="Description" cols="60" rows="5" onChange={handleDescChange}></textarea>
+          <textarea id="eventDescription" name="Description" cols="60" rows="5" onChange={handleDescChange} value={description}></textarea>
         </div>
         <div className="inputContainer">
           <label htmlFor="eventPreviewText">Preview: </label>
-          <textarea id="eventPreviewText" name="Preview" cols="60" rows="5" onChange={handlePreviewChange}></textarea>
+          <textarea id="eventPreviewText" name="Preview" cols="60" rows="5" onChange={handlePreviewChange} value={previewText}></textarea>
         </div>
         <div className="inputContainer">
           <label htmlFor="eventStartDate">Start Date: </label>
-          <input type="date" id="eventStartDate" name="Start Date" onChange={handleStartDateChange} />
+          <input type="date" id="eventStartDate" name="Start Date" onChange={handleStartDateChange} value={startDate}/>
         </div>
         <div className="inputContainer">
           <label htmlFor="eventEndDate">End Date: </label>
-          <input type="date" id="eventEndDate" name="End Date" onChange={handleEndDateChange} />
+          <input type="date" id="eventEndDate" name="End Date" onChange={handleEndDateChange} value={endDate}/>
         </div>
         <div className="inputContainer">
           <label htmlFor="eventTime">Time: </label>
-          <input type="time" id="eventTime" name="Time" onChange={handleTimeChange} />
+          <input type="time" id="eventTime" name="Time" onChange={handleTimeChange} value={time}/>
         </div>
         <div className="inputContainer">
           <label htmlFor="eventAddress">Location: </label>
-          <input type="text" id="eventAddress" name="Address" onChange={handleLocationChange} />
+          <input type="text" id="eventAddress" name="Address" onChange={handleLocationChange} value={location} />
         </div>
       </div>
       {readyToSubmit && (

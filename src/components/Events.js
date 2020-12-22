@@ -30,6 +30,7 @@ export default function Events() {
             let type = 'event';
             let id = doc.id;
 
+            // Event object
             let event = {
               id,
               type,
@@ -43,17 +44,24 @@ export default function Events() {
             }
             tempData.push(event);
           });
+
+          // Sort the data by start date
+          tempData.sort((a, b) => {
+            a = new Date(a.startDate).getTime();
+            b = new Date(b.startDate).getTime();
+            return a - b;
+          })
+          
+          // Set the data state to the new data pulled in from Firebase
           setData(tempData);
+
+          // Get rid of the Loading... notifications
           setIsResolved(true);
         }
       )
     }
     getEvents();
-  }, [isAdding]);
-
-  useEffect(() => {
-    console.log("Data changed");
-  }, [data])
+  }, [isAdding, isEditing]);
 
   const convertTime = time => {
     time = time.split(':');
@@ -74,7 +82,7 @@ export default function Events() {
       .doc(id)
       .delete()
       .then(() => {
-        window.location.reload(false);
+        console.log('Deleted event');
       })
   }
 
@@ -84,26 +92,24 @@ export default function Events() {
         <>
           <div className="addButtonContainer">
             <button onClick={() => setIsAdding(true)}>+ Add Event</button>
-            {/* <IconButton aria-label="delete">
-              <DeleteIcon fontSize="medium" />
-            </IconButton> */}
           </div>
           {!isResolved && <h1>Loading...</h1>}
           {isResolved && <table><tbody>
             <tr className="tableHeader">
               <th></th>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Preview Text</th>
-              <th>Location</th>
               <th>Start Date</th>
               <th>End Date</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Preview</th>
+              <th>Location</th>
               <th>Time</th>
             </tr>
             {data.map((ele, i) => {
               return (
                 <>
-                  {i % 2 === 0 && (<tr className="grayRow">
+                  {i % 2 === 0 && (
+                  <tr className="grayRow">
                     <div className="crudButtons">
                       <button className="editButtonInverted" onClick={() => {
                         setIsEditing(true);
@@ -122,17 +128,18 @@ export default function Events() {
                         </IconButton>
                       </button>
                     </div>
+                    <td>{ele.startDate}</td>
+                    <td>{ele.endDate}</td>
                     <td>{ele.title}</td>
                     <td>{ele.description}</td>
                     <td>{ele.previewText}</td>
                     <td>{ele.location}</td>
-                    <td>{ele.startDate}</td>
-                    <td>{ele.endDate}</td>
                     <td>{ele.time}</td>
                   </tr>)}
-                  {i % 2 === 1 && (<tr className="whiteRow">
-                  <div className="crudButtons">
-                      <button className="editButtonInverted" onClick={() => {
+                  {i % 2 === 1 && (
+                  <tr className="whiteRow">
+                    <div className="crudButtons">
+                      <button className="editButton" onClick={() => {
                         setIsEditing(true);
                         setDocId(ele.id);
                       }}>
@@ -140,7 +147,7 @@ export default function Events() {
                           <EditIcon fontSize="medium" />
                         </IconButton>
                       </button>
-                      <button className="deleteButtonInverted" onClick={() => {
+                      <button className="deleteButton" onClick={() => {
                         var r = window.confirm("Are you sure you want to delete this event?");
                         if (r === true) deleteEvent(ele.id);
                       }}>
@@ -149,12 +156,12 @@ export default function Events() {
                         </IconButton>
                       </button>
                     </div>
+                    <td>{ele.startDate}</td>
+                    <td>{ele.endDate}</td>
                     <td>{ele.title}</td>
                     <td>{ele.description}</td>
                     <td>{ele.previewText}</td>
                     <td>{ele.location}</td>
-                    <td>{ele.startDate}</td>
-                    <td>{ele.endDate}</td>
                     <td>{ele.time}</td>
                   </tr>)}
                 </>)

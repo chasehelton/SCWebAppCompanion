@@ -34,7 +34,7 @@ button {
   max-width: 300px;
   font-weight: 600;
   font-size: large;
-  margin: 5px;
+  margin: 5px 10px;
   border: none;
   border-radius: 10px;
 }
@@ -83,6 +83,7 @@ textarea {
   display: inline-block;
   width: 100%;
   padding: 15px;
+  background-color: darkgray;
 }
 
 .dataSelectButtons {
@@ -99,6 +100,10 @@ textarea {
 
 .settingsButtons {
   float: right;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  align-self: flex-end;
 }
 
 .navButton {
@@ -136,26 +141,47 @@ textarea {
 }
 
 .editButton {
-  color: black;
-  background-color: white;
+  background: white;
+	color: black;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+  outline: inherit;
 }
 
 .deleteButton {
-  color: red;
-  background-color: white;
+  background: white;
+	color: darkred;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 }
 
 .editButtonInverted {
-  color: black;
-  background-color: lightgray;
+  background: lightgray;
+	color: black;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 }
 
 .deleteButtonInverted {
-  color: red;
-  background-color: lightgray;
+  background: lightgray;
+	color: darkred;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
 }
 
 .signOutButton {
+  padding: 10px;
   background-color: red;
   color: white;
 }
@@ -173,14 +199,14 @@ textarea {
 table {
   display: flex;
   width: 100%;
-  margin-left: 40px;
-  margin-right: 40px;
   border-collapse: collapse;
+  padding: 20px;
 }
 
 td {
   padding: 20px 20px;
   text-align: left;
+  font-size: large;
 }
 
 th {
@@ -225,6 +251,6 @@ tr {
 }
 
 .crudButtons {
-  display: flex;
-  flex: 1;
+  justify-content: center;
+  display: inline-block;
 }
