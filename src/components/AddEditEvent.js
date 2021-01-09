@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import '../App.css';
 import Firebase from '../lib/firebase';
 
-export default function AddEvent({isAdding, isEditing, docId}) {
+export default function AddEditEvent({isAdding, isEditing, docId}) {
   const [startDate, setStartDate] = useState("");
   const handleStartDateChange = ev => setStartDate(ev.target.value);
   const [endDate, setEndDate] = useState("");
@@ -69,6 +69,7 @@ export default function AddEvent({isAdding, isEditing, docId}) {
       .then(() => {
         alert('Sent!');
         isAdding = false;
+        window.location.reload();
       })
       .catch(() => console.log('Something went wrong'));
   }
@@ -81,6 +82,7 @@ export default function AddEvent({isAdding, isEditing, docId}) {
       .then(() => {
         alert('Sent!');
         isEditing = false;
+        window.location.reload();
       })
       .catch(() => console.log('Something went wrong'));
   }

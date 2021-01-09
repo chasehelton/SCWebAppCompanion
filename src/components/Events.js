@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import '../App.css';
 import Firebase from '../lib/firebase';
-import AddEvent from '../components/AddEvent';
+import AddEditEvent from '../components/AddEditEvent';
 
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -171,13 +171,13 @@ export default function Events() {
       )}
       {isAdding && (
         <>
-          <AddEvent isAdding={isAdding}/>
+          <AddEditEvent isAdding={isAdding}/>
           <button className="closeButton" onClick={() => setIsAdding(false)}>Close</button>
         </>
       )}
       {isEditing && (
         <>
-          <AddEvent isEditing={isEditing} docId={docId} />
+          <AddEditEvent isEditing={isEditing} docId={docId} />
           <button className="closeButton" onClick={() => setIsEditing(false)}>Close</button>
         </>
       )}
